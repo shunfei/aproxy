@@ -1,0 +1,24 @@
+<div class="panel panel-default" ng>
+    <div class="panel-heading ">
+      <a class="btn btn-success btn-sm pull-right " href="#/role/new" >Add</a>
+        <span class="pull-right info"></span>
+        <strong>Role List</strong>
+    </div>
+    <div class="panel-body list-group">
+      <div ng-repeat="role in roles | orderBy:orderProp" class="list-group-item" id="role-{{role.Id}}">
+        <div class="row">
+          <a href="#/role/{{role.Id}}"><b class="text-info">
+            {{role.Name}}</b></a> <a ng-click="delRole(role)" class="btn btn-danger btn-xs" href="javascript:">DEL</a>
+          <div class="text-muted"><small>{{role.Desc}}</small></div>
+          <div style="padding-left:20px;">
+            <div><b class="text-success">Allow:</b>
+              <span ng-repeat="allow in role.Allow"> {{allow}} , </span>
+            </div>
+            <div><b class="text-danger">Deny:</b>
+              <span ng-repeat="deny in role.Deny"> {{deny}} , </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

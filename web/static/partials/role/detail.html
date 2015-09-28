@@ -1,0 +1,45 @@
+
+<div class="panel panel-default" >
+    <div class="panel-heading">
+        <span class="pull-right info"></span>
+        <strong>Edit Role: <code>{{role.Name}}</code></strong>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" ng-submit="saveRoleConf()">
+          <fieldset ng-disabled="isSaving">
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="name" placeholder="role name" ng-model="role.Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="desc" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="desc" placeholder="some thing about this role" ng-model="role.Desc"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="allow" class="col-sm-2 control-label text-success">Allow</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="allow" placeholder="abc.com/allow/*" ng-model="role.Allow" ng-list="&#10;" ng-trim="false"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="deny" class="col-sm-2 control-label text-danger">Deny</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="deny" placeholder="abc.com/deny/*" ng-model="role.Deny" ng-list="&#10;" ng-trim="false"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="#/role/" class="btn btn-danger">Cancel</a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+
+
+</div>
