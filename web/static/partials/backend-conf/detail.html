@@ -1,0 +1,45 @@
+<div class="panel panel-default" >
+    <div class="panel-heading">
+        <span class="pull-right info"></span>
+        <strong>Edit: <code>{{oldHostName}}</code></strong>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" ng-submit="saveBackendConf()">
+          <fieldset ng-disabled="isSaving">
+            <div class="form-group">
+              <label for="hostname" class="col-sm-2 control-label">HostName</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="hostname" placeholder="www.abc.com" ng-model="backend.HostName">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="desc" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="desc" placeholder="some thing about this host" ng-model="backend.Desc"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="authtype" class="col-sm-2 control-label">Auth Type</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="authtype" ng-model="backend.AuthType" ng-options="key*1 as value for (key,value) in authTypes">
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="upstream" class="col-sm-2 control-label">UpStream</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="upstream" placeholder="http://127.0.0.1:8080" ng-model="backend.UpStreams" ng-list="&#10;" ng-trim="false"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success" ng-click="saveBackendConf">Save</button>
+                <a href="#/" class="btn btn-danger">Cancel</a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+
+
+</div>
