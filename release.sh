@@ -1,6 +1,7 @@
 #!/bin/sh
 
 APROXY_VER="0.1"
+APROXY_BIN_GO="./bin/aproxy.go"
 
 if [ ! -f "$APROXY_BIN_GO" ]; then
 	echo "please enter aproxy root dir."
