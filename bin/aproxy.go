@@ -25,7 +25,10 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	flag.Parse()
-	conf.LoadAproxyConfig(*confFile)
+	err := conf.LoadAproxyConfig(*confFile)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	config := conf.Config()
 
@@ -35,7 +38,7 @@ func main() {
 	}
 
 	mgoConf := config.Db.Mongo
-	err := db.InitMongoDB(mgoConf.Servers, mgoConf.Db)
+	err = db.InitMongoDB(mgoConf.Servers, mgoConf.Db)
 	if err != nil {
 		log.Fatalln("Can not set to MongoDB backend config storage.", mgoConf.Servers)
 	}
@@ -47,8 +50,11 @@ func main() {
 	// session
 	ssConf := config.Session
 	session.InitSessionServer(ssConf.Domain, ssConf.Cookie, ssConf.Expiration)
-	session.SetSessionStoragerToRedis(ssConf.Redis.Addr,
+	err = session.SetSessionStoragerToRedis(ssConf.Redis.Addr,
 		ssConf.Redis.Password, ssConf.Redis.Db)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	// login
 	login.InitLoginServer(config.LoginHost, config.AproxyUrlPrefix)
