@@ -1,6 +1,7 @@
 package session
 
 import (
+	"fmt"
 	"time"
 
 	"gopkg.in/redis.v3"
@@ -78,10 +79,11 @@ func SetSessionStorager(ss SessionStorager) {
 	sessionStorage = ss
 }
 
-func SetSessionStoragerToRedis(addr, pwd string, db int64) {
+func SetSessionStoragerToRedis(addr, pwd string, db int64) error {
 	ss, err := NewRedisSessionStorage(addr, pwd, db)
 	if err != nil {
-		panic("[SetSessionStoragerToRedis] faild: " + err.Error())
+		return fmt.Errorf("[SetSessionStoragerToRedis] faild: %s", err.Error())
 	}
 	sessionStorage = ss
+	return nil
 }

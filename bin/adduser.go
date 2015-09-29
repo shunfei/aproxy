@@ -62,10 +62,13 @@ func initMongo() {
 	if inited {
 		return
 	}
-	conf.LoadAproxyConfig(*confFile)
+	err := conf.LoadAproxyConfig(*confFile)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	config := conf.Config()
 	mgoConf := config.Db.Mongo
-	err := db.InitMongoDB(mgoConf.Servers, mgoConf.Db)
+	err = db.InitMongoDB(mgoConf.Servers, mgoConf.Db)
 	if err != nil {
 		log.Fatalln("Can not set to MongoDB backend config storage.", mgoConf.Servers)
 	}

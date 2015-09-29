@@ -31,11 +31,12 @@ type AproxyConfig struct {
 
 var aproxyConfig AproxyConfig
 
-func LoadAproxyConfig(tomlFile string) {
+func LoadAproxyConfig(tomlFile string) error {
 	if _, err := toml.DecodeFile(tomlFile, &aproxyConfig); err != nil {
-		panic(fmt.Sprintf("Load config file [%s] faild: %s",
-			tomlFile, err))
+		return fmt.Errorf("Load config file [%s] faild: %s",
+			tomlFile, err)
 	}
+	return nil
 }
 
 func Config() *AproxyConfig {

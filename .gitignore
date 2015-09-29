@@ -1,1 +1,5 @@
+.git
+.svn
 .DS_Store
+dist
+release
