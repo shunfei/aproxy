@@ -304,6 +304,7 @@ aproxyControllers.controller('AuthorityAddNewCtrl',
     $scope.adminLevel = adminLevel;
     $scope.authority = new Authority();
     $scope.authority.AdminLevel = 0
+    $scope.authority.Email = $location.search().email || '';
     Role.query(null, function (res) {
       if (res.success) {
         $scope.roles = res.data;
