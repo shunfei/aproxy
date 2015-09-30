@@ -1,6 +1,6 @@
 # aproxy
 
-`aproxy` is a reverse proxy that include authentication. It design to protect the resources that you want to expose, but only allow some one has you permission to access.
+`aproxy` is a reverse proxy that includes authentication. It is designed to protect the resources that you want to expose, but only allow some one has you permission to access.
 
 ## Screenshot
 
@@ -22,7 +22,7 @@
 ### Install from source
 
 ```
-cd $GOPATH
+cd $GOPATH/src
 git clone https://github.com/shunfei/aproxy.git
 cd aproxy
 sh ./install.sh
