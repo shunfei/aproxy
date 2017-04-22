@@ -107,5 +107,9 @@ func NewApiApp() *rfweb.App {
 	app.Resource("user/login", &login.LoginResource{})
 	app.Resource("user/logout", &login.LogoutResource{})
 
+	app.Resource("oauth/list", &login.OauthListResource{})
+	app.Resource("oauth/login", &login.OauthLoginResource{})
+	app.Resource("oauth/callback", &login.OauthCallbackResource{})
+
 	return app
 }

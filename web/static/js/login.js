@@ -29,3 +29,19 @@ function getURLParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+$(document).ready(function(){
+	$.get("api/oauth/list",function(data, status){
+		console.dir("Data: " + data + "\nStatus: " + status);
+		if (data.data && data.data.length > 0) {
+			$("#oauthLogin").show();
+			var tourl = getURLParameterByName('returnurl');
+			var oauthProviders = "";
+			for (var i = 0; i < data.data.length; i++) {
+				var provider = data.data[i];
+				oauthProviders += '<a href="api/oauth/login?provider='+provider+'&returnurl='+tourl+'" class="btn btn-info">'+provider+'</a>';
+			}
+			$("#oauthProviderList").html(oauthProviders)
+		}
+	});
+});
+
