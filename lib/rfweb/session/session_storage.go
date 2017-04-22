@@ -1,10 +1,11 @@
 package session
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
-	"gopkg.in/redis.v3"
+	redis "gopkg.in/redis.v5"
 )
 
 var sessionStorage SessionStorager
@@ -21,34 +22,46 @@ type SessionStorager interface {
 type RedisSessionStorage struct {
 	Addr     string
 	Password string
-	DB       int64
+	DB       int
 
 	client *redis.Client
 }
 
 // addr: "127.0.0.1:6379"
-func NewRedisSessionStorage(addr, pwd string, db int64) (*RedisSessionStorage, error) {
+func NewRedisSessionStorage(addr, pwd string, db int) (*RedisSessionStorage, error) {
 	ss := &RedisSessionStorage{
 		Addr:     addr,
 		Password: pwd,
 		DB:       db,
 	}
 	ss.client = redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: pwd,
-		DB:       db,
+		Addr:        addr,
+		Password:    pwd,
+		DB:          db,
+		IdleTimeout: 3 * time.Minute,
 	})
 	_, err := ss.client.Ping().Result()
 	if err != nil {
 		return nil, err
 	}
+	// // keep-alive
+	// go func() {
+	// 	for {
+	// 		ss.client.Ping()
+	// 		time.Sleep(10 * time.Second)
+	// 	}
+	// }()
 	return ss, nil
 }
 
 func (self *RedisSessionStorage) Get(sid, key string) (string, error) {
 	val, err := self.client.HGet(sid, key).Result()
-	if err != nil && err == redis.Nil {
-		err = nil
+	if err != nil {
+		if err == redis.Nil {
+			err = nil
+		} else {
+			err = errors.New("redis hget error: " + err.Error())
+		}
 	}
 	return val, err
 }
@@ -79,7 +92,7 @@ func SetSessionStorager(ss SessionStorager) {
 	sessionStorage = ss
 }
 
-func SetSessionStoragerToRedis(addr, pwd string, db int64) error {
+func SetSessionStoragerToRedis(addr, pwd string, db int) error {
 	ss, err := NewRedisSessionStorage(addr, pwd, db)
 	if err != nil {
 		return fmt.Errorf("[SetSessionStoragerToRedis] faild: %s", err.Error())

@@ -1,1 +1,4 @@
 body{padding-top:80px}
+#oauthProviderList a {
+    margin-right: 3px; 
+}

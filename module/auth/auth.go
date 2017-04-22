@@ -44,7 +44,7 @@ func GetLoginedUser(ctx *rfweb.Context) *User {
 	var user User
 	err := session.GetStuct(constant.SS_KEY_USER, &user)
 	if err != nil {
-		log.Println("[ERROR]", err)
+		log.Println("[ERROR] get session error: ", err)
 		return nil
 	}
 	if len(user.Id) > 0 {

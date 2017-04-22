@@ -18,13 +18,21 @@ type AproxyConfig struct {
 		Redis      struct {
 			Addr     string
 			Password string
-			Db       int64
+			Db       int
 		}
 	}
 	Db struct {
 		Mongo struct {
 			Servers []string
 			Db      string
+		}
+	}
+	Oauth struct {
+		Open   bool
+		Github struct {
+			Open         bool
+			ClientID     string
+			ClientSecret string
 		}
 	}
 }

@@ -9,10 +9,12 @@ import (
 
 	"aproxy/conf"
 	"aproxy/lib/rfweb/session"
+	"aproxy/loginservices/github"
 	"aproxy/module/auth"
 	"aproxy/module/auth/login"
 	bkconf "aproxy/module/backend_conf"
 	"aproxy/module/db"
+	"aproxy/module/oauth"
 	"aproxy/module/proxy"
 	"aproxy/module/setting"
 )
@@ -25,6 +27,7 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	flag.Parse()
+
 	err := conf.LoadAproxyConfig(*confFile)
 	if err != nil {
 		log.Fatalln(err)
@@ -53,7 +56,7 @@ func main() {
 	err = session.SetSessionStoragerToRedis(ssConf.Redis.Addr,
 		ssConf.Redis.Password, ssConf.Redis.Db)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("SetSessionStoragerToRedis faild:", err)
 	}
 
 	// login
@@ -61,6 +64,9 @@ func main() {
 
 	// setting manager
 	setting.InitSettingServer(config.WebDir, config.AproxyUrlPrefix)
+
+	//oauth
+	initOauth(config)
 
 	lhost := config.Listen
 	mux := http.NewServeMux()
@@ -94,4 +100,16 @@ func checkWebDir(webDir string) bool {
 		return false
 	}
 	return true
+}
+
+func initOauth(config *conf.AproxyConfig) {
+	oauthConfig := config.Oauth
+	if oauthConfig.Open {
+		if oauthConfig.Github.Open {
+			github.InitGithubOauther(setting.AproxyUrlPrefix, config.LoginHost,
+				oauthConfig.Github.ClientID, oauthConfig.Github.ClientSecret)
+			o := github.GithubOauther{}
+			oauth.Register(o)
+		}
+	}
 }

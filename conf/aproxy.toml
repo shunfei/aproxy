@@ -47,3 +47,13 @@ expiration = 604800
 	db = "aproxy"
 
 [backend]
+
+[oauth]
+# open oauth login
+open = true
+	# github's oauth config
+	[oauth.github]
+	# open github's oauth login
+	open = true
+	clientID = "0db6147112a021eed820"
+	clientSecret = "693fe4efe19ef66e8935897572fb74c2001069de"

@@ -53,17 +53,12 @@
 
     <div class="container" role="main">
       <div class="login-form">
-        <form class="form-horizontal" onsubmit="return login();">
+        <form class="form-horizontal well" onsubmit="return login();">
           <fieldset>
-
-            <div class="modal">
-              <div class="modal-dialog">
-                <div class="modal-content">
                   <div class="modal-header">
                     <h4 class="modal-title">Login</h4>
                   </div>
                   <div class="modal-body">
-
                     <div class="form-group">
                       <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                       <div class="col-lg-10">
@@ -81,19 +76,19 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
                   <div class="modal-footer">
                     <button type="reset" class="btn btn-default">Cancel</button>
                     <button type="submit" class="btn btn-primary">Login</button>
                   </div>
-  
-                </div>
-              </div>
-            </div>
 
           </fieldset>
         </form>
+
+        <div id="oauthLogin" style="display:none;">
+          <h4>Log in with...</h4>
+          <p id="oauthProviderList" class="bs-component"></p>
+        </div>
 
       </div> 
     </div> <!-- /container -->
