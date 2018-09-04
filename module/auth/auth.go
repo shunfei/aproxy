@@ -12,7 +12,7 @@ import (
 //     1: need login
 //     2: do not has permission
 func CheckPermission(authType int, ctx *rfweb.Context) int {
-	if authType < constant.AUTH_TYPE_PUBLIC {
+	if authType <= constant.AUTH_TYPE_PUBLIC {
 		return constant.PERMISSION_STATUS_OK
 	}
 	user := GetLoginedUser(ctx)
