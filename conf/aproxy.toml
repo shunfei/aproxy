@@ -1,0 +1,61 @@
+###########
+# title = "aProxy conf"
+###########
+
+listen = ":8098"
+
+###
+# aproxy's admin setting web dir
+webdir = "/path/to/aproxy/web/static/"
+
+###
+# if loginHost is blank, will use current url hots.
+# or set to like "http://aproxy.loc"
+loginHost = ""
+
+###
+# aproxy admin url prefix,
+# default is "/-_-aproxy-_-/",
+# need end with "/"
+aproxyUrlPrefix = "/-_-aproxy-_-/"
+
+auditLogPath = "/data/logs/aproxy-audit.log"
+
+[session]
+###
+# session cookie domain,
+# e.g. abc.com
+domain = ""
+
+###
+# session cookie name
+cookie = "_aproxySID"
+
+###
+# session Expiration,
+# default is 604800 (7 days)
+expiration = 604800
+
+	###
+	# session storage
+	[session.redis]
+	addr = "127.0.0.1:6379"
+	password = ""
+	db = 0
+
+[db]
+	[db.mongo]
+	servers = ["127.0.0.1:27017"]
+	db = "aproxy"
+
+[backend]
+
+[oauth]
+# open oauth login
+open = true
+	# github's oauth config
+	[oauth.github]
+	# open github's oauth login
+	open = true
+	clientID = "xxx"
+	clientSecret = "xxxxxx"
