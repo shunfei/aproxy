@@ -4,6 +4,9 @@ function login () {
 	var rememberMe = $('#inputRemember').is(':checked');
 	if (!email) { alert('Please enter the Email.'); return false; }
 	if (!pwd) { alert('Please enter the Password.'); return false; }
+	$('#login-form :input').attr('disabled', true);
+	$('#login-form .progress').show();
+
 	$.ajax({
 	  	type: 'POST',
 	  	dataType: 'json',
@@ -17,7 +20,12 @@ function login () {
 			} else {
 				alert('login faild: ' + res.error);
 			}
-	  	}
+	  	},
+		complete: function () {
+			$('#login-form :input').attr('disabled', false);
+			$('#login-form .progress').hide();
+		}
+  
 	});
 	return false;
 }

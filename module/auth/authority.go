@@ -23,6 +23,7 @@ type Authority struct {
 
 	Id    string   `bson:"_id,omitempty"`
 	Email string   `bson:"Email"`
+	Desc  string   `bson:"Desc"` // description
 	Roles []string `bson:"Roles"`
 	Allow []string `bson:"Allow"`
 	Deny  []string `bson:"Deny"`
@@ -167,6 +168,7 @@ func InsertAuthority(a *Authority) error {
 func UpdateAuthority(id string, a *Authority) error {
 	c := db.MDB().C(C_NAME_Authority)
 	change := bson.M{"$set": bson.M{
+		"Desc":        a.Desc,
 		"AdminLevel":  a.AdminLevel,
 		"Roles":       a.Roles,
 		"Allow":       a.Allow,

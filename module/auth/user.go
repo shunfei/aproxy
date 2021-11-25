@@ -24,6 +24,7 @@ type User struct {
 	Id    string `bson:"_id,omitempty"`
 	Name  string `bson:"Name"`
 	Email string `bson:"Email"`
+	Desc  string `bson:"Desc"` // description
 	Pwd   string `bson:"Pwd" json:"-"`
 
 	CreatedTime time.Time `bson:"CreatedTime"`

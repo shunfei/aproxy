@@ -20,7 +20,7 @@
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../bootstrap/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="lib/bootstrap/js/ie-emulation-modes-warning.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,7 +52,7 @@
     </div>
 
     <div class="container" role="main">
-      <div class="login-form">
+      <div id="login-form" class="login-form">
         <form class="form-horizontal well" onsubmit="return login();">
           <fieldset>
                   <div class="modal-header">
@@ -78,8 +78,11 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="reset" class="btn btn-default">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button id="btnreset" type="reset" class="btn btn-default">Cancel</button>
+                    <button id="btnsubmit" type="submit" class="btn btn-primary">Login</button>
+                  </div>
+                  <div class="progress" style="display: none;">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
                   </div>
 
           </fieldset>
@@ -97,9 +100,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="lib/bootstrap/js/docs.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/docs.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="lib/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

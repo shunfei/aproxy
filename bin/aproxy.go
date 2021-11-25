@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"aproxy/conf"
+	"aproxy/lib/auditlog"
 	"aproxy/lib/rfweb/session"
 	"aproxy/loginservices/github"
 	"aproxy/module/auth"
@@ -67,6 +68,12 @@ func main() {
 
 	//oauth
 	initOauth(config)
+
+	// log
+	err = auditlog.Init(config.AuditLogPath)
+	if err != nil {
+		log.Fatalln("Init audit log fatal.", config.AuditLogPath, err)
+	}
 
 	lhost := config.Listen
 	mux := http.NewServeMux()

@@ -19,7 +19,7 @@
       <div ng-repeat="authority in authorities | orderBy:orderProp" class="list-group-item" id="ahty-{{authority.Id}}">
         <div class="row">
           <a href="#/authority/{{authority.Id}}"><b class="text-info">
-            {{authority.Email}}</b></a> <a ng-click="delAuthority(authority)" class="btn btn-danger btn-xs" href="javascript:">DEL</a>
+            {{authority.Email}}</b></a> <a ng-click="delAuthority(authority)" class="btn btn-danger btn-xs" href="javascript:">DEL</a> <small class="text-muted ng-binding">{{authority.Desc}}</small>
           <div style="padding-left:20px;">
             <div> <b class="text-success">Allow: </b>
               <span ng-repeat="allow in authority.Allow">

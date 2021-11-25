@@ -11,6 +11,7 @@ type AproxyConfig struct {
 	WebDir          string
 	LoginHost       string
 	AproxyUrlPrefix string
+	AuditLogPath    string
 	Session         struct {
 		Cookie     string
 		Domain     string

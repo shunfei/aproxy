@@ -2,6 +2,7 @@ package proxy
 
 import (
 	// "log"
+	"crypto/tls"
 	"net/http"
 	"strings"
 
@@ -9,6 +10,7 @@ import (
 	"github.com/mailgun/oxy/roundrobin"
 	"github.com/mailgun/oxy/testutils"
 
+	"aproxy/lib/auditlog"
 	"aproxy/lib/rfweb"
 	"aproxy/module/auth"
 	"aproxy/module/auth/login"
@@ -17,8 +19,8 @@ import (
 )
 
 func Proxy(w http.ResponseWriter, r *http.Request) {
+	ctx := rfweb.NewContext(w, r)
 	if b, ok := getBackend(r); ok {
-		ctx := rfweb.NewContext(w, r)
 		status := auth.CheckPermission(b.Conf.AuthType, ctx)
 		if status == constant.PERMISSION_STATUS_OK {
 			b.Lb.ServeHTTP(w, r)
@@ -31,6 +33,17 @@ func Proxy(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.NotFound(w, r)
 	}
+
+	// log
+	u := auth.GetLoginedUser(ctx)
+	if u == nil {
+		u = &auth.User{
+			Name:  "Anonymous",
+			Email: "",
+		}
+	}
+	auditlog.AccessLog(u, r.Host+r.RequestURI)
+
 }
 
 func getBackend(r *http.Request) (Backend, bool) {
@@ -41,7 +54,16 @@ func getBackend(r *http.Request) (Backend, bool) {
 	}
 	if bc, ok := getBackendConf(host); ok {
 		b.Conf = bc
-		b.Fwd, _ = forward.New(forward.PassHostHeader(true))
+		tlsConfig := &tls.Config{
+			InsecureSkipVerify: true,
+		}
+		roundTripper := &http.Transport{
+			TLSClientConfig: tlsConfig,
+		}
+		b.Fwd, _ = forward.New(forward.PassHostHeader(true),
+			forward.WebsocketTLSClientConfig(tlsConfig),
+			forward.RoundTripper(roundTripper))
+
 		b.Lb, _ = roundrobin.New(b.Fwd)
 		for _, upstream := range bc.UpStreams {
 			b.Lb.UpsertServer(testutils.ParseURI(upstream))
